@@ -29,7 +29,6 @@ class VideoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(videoContainerView)
-        videoContainerView.fillSuperview()
     }
 
     required init?(coder: NSCoder) {
@@ -38,7 +37,7 @@ class VideoCell: UICollectionViewCell {
 
     private func setupPlayer() {
         guard let video = video else { return }
-        guard let url = URL(string: video.videoURL) else { return }
+        guard let url = URL(string: video.videoURL ?? "") else { return }
 
         player = AVPlayer(url: url)
         playerLayer = AVPlayerLayer(player: player)

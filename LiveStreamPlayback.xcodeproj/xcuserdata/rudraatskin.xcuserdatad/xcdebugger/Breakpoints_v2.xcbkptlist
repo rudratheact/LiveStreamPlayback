@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "9FBD1742-3B3B-4AA5-98EA-E7F9807652DE"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "085C1244-A6D9-44FE-BA97-D4FAAE3EC58B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "fetchVideos()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "085C1244-A6D9-44FE-BA97-D4FAAE3EC58B - 3eb685dfab87925f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;LiveStreamPlayback.Video&gt;, Swift.Error&gt;) -&gt; () in LiveStreamPlayback.LiveStreamViewController.fetchVideos() -&gt; ()"
+                  moduleName = "LiveStreamPlayback.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rudraatskin/_Repo/LiveStreamPlayback/LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+               <Location
+                  uuid = "085C1244-A6D9-44FE-BA97-D4FAAE3EC58B - 3eb685dfab87925f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;LiveStreamPlayback.Video&gt;, Swift.Error&gt;) -&gt; () in LiveStreamPlayback.LiveStreamViewController.fetchVideos() -&gt; ()"
+                  moduleName = "LiveStreamPlayback.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rudraatskin/_Repo/LiveStreamPlayback/LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BED1C796-1688-4537-9C6D-3224D15A85E0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "fetchVideos()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BED1C796-1688-4537-9C6D-3224D15A85E0 - f0fbbd14bf09c7fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LiveStreamPlayback.LiveStreamViewController.fetchVideos() -&gt; ()"
+                  moduleName = "LiveStreamPlayback.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rudraatskin/_Repo/LiveStreamPlayback/LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38">
+               </Location>
+               <Location
+                  uuid = "BED1C796-1688-4537-9C6D-3224D15A85E0 - 3eb685dfab87929d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;LiveStreamPlayback.Video&gt;, Swift.Error&gt;) -&gt; () in LiveStreamPlayback.LiveStreamViewController.fetchVideos() -&gt; ()"
+                  moduleName = "LiveStreamPlayback.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rudraatskin/_Repo/LiveStreamPlayback/LiveStreamPlayback/ViewControllers/LiveStreamViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

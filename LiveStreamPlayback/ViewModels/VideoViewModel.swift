@@ -12,44 +12,46 @@ class VideoViewModel {
     var comments: [Comment] = []
 
     func fetchVideos(completion: @escaping (Result<[Video], Error>) -> Void) {
-        let url = URL(string: "https://path-to-your-video-json.com")!
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(NSError(domain: "data error", code: 0)))
-                return
-            }
-            do {
-                let videoResponse = try JSONDecoder().decode([String: [Video]].self, from: data)
-                self.videos = videoResponse["videos"] ?? []
-                completion(.success(self.videos))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
+        if let filePath = Bundle.main.path(forResource: "video_data", ofType: "json"), let url = URL(string: filePath) {
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "data error", code: 0)))
+                    return
+                }
+                do {
+                    let videoResponse = try JSONDecoder().decode([String: [Video]].self, from: data)
+                    self.videos = videoResponse["videos"] ?? []
+                    completion(.success(self.videos))
+                } catch {
+                    completion(.failure(error))
+                }
+            }.resume()
+        }
     }
 
     func fetchComments(completion: @escaping (Result<[Comment], Error>) -> Void) {
-        let url = URL(string: "https://path-to-your-comment-json.com")!
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(NSError(domain: "data error", code: 0)))
-                return
-            }
-            do {
-                let commentResponse = try JSONDecoder().decode([String: [Comment]].self, from: data)
-                self.comments = commentResponse["comments"] ?? []
-                completion(.success(self.comments))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
+        if let filePath = Bundle.main.path(forResource: "comments_data", ofType: "json"), let url = URL(string: filePath) {
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "data error", code: 0)))
+                    return
+                }
+                do {
+                    let commentResponse = try JSONDecoder().decode([String: [Comment]].self, from: data)
+                    self.comments = commentResponse["comments"] ?? []
+                    completion(.success(self.comments))
+                } catch {
+                    completion(.failure(error))
+                }
+            }.resume()
+        }
     }
 }
