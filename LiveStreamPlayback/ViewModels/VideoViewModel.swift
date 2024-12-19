@@ -12,7 +12,8 @@ class VideoViewModel {
     var comments: [Comment] = []
 
     func fetchVideos(completion: @escaping (Result<[Video], Error>) -> Void) {
-        if let filePath = Bundle.main.path(forResource: "video_data", ofType: "json"), let url = URL(string: filePath) {
+        if let filePath = Bundle.main.path(forResource: "video_data", ofType: "json") {
+            let url = URL(fileURLWithPath: filePath)
             URLSession.shared.dataTask(with: url) { data, _, error in
                 if let error = error {
                     completion(.failure(error))
@@ -34,7 +35,8 @@ class VideoViewModel {
     }
 
     func fetchComments(completion: @escaping (Result<[Comment], Error>) -> Void) {
-        if let filePath = Bundle.main.path(forResource: "comments_data", ofType: "json"), let url = URL(string: filePath) {
+        if let filePath = Bundle.main.path(forResource: "comments_data", ofType: "json") {
+            let url = URL(fileURLWithPath: filePath)
             URLSession.shared.dataTask(with: url) { data, _, error in
                 if let error = error {
                     completion(.failure(error))

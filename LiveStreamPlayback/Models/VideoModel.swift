@@ -16,7 +16,7 @@ struct Video: Decodable {
     let topic: String?
     let viewers: Int?
     let likes: Int?
-    let videoURL: String?
+    let video: String?
     let thumbnailURL: String?
 }
 
