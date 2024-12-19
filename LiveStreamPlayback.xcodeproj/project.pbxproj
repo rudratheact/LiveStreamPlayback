@@ -37,6 +37,22 @@
 			);
 			target = 7CF00D982D13FB1700CB1089 /* LiveStreamPlayback */;
 		};
+		7CF00DD92D13FF0D00CB1089 /* Exceptions for "LiveStreamPlayback" folder in "LiveStreamPlaybackTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/comments_data.json,
+				Data/video_data.json,
+			);
+			target = 7CF00DAE2D13FB1900CB1089 /* LiveStreamPlaybackTests */;
+		};
+		7CF00DDA2D13FF0D00CB1089 /* Exceptions for "LiveStreamPlayback" folder in "LiveStreamPlaybackUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/comments_data.json,
+				Data/video_data.json,
+			);
+			target = 7CF00DB82D13FB1900CB1089 /* LiveStreamPlaybackUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +60,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				7CF00DC12D13FB1900CB1089 /* Exceptions for "LiveStreamPlayback" folder in "LiveStreamPlayback" target */,
+				7CF00DD92D13FF0D00CB1089 /* Exceptions for "LiveStreamPlayback" folder in "LiveStreamPlaybackTests" target */,
+				7CF00DDA2D13FF0D00CB1089 /* Exceptions for "LiveStreamPlayback" folder in "LiveStreamPlaybackUITests" target */,
 			);
 			path = LiveStreamPlayback;
 			sourceTree = "<group>";
