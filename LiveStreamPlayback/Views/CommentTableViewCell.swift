@@ -36,7 +36,7 @@ class CommentTableViewCell: UITableViewCell {
         userImageView.layer.cornerRadius = 20
         userImageView.clipsToBounds = true
         contentView.addSubview(userImageView)
-        userImageView.image = UIImage(systemName: "person.crop.circle.fill")
+        userImageView.image = UIImage(systemName: "person.crop.circle.fill") // Default image
         
         // User Name Label setup
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -76,6 +76,7 @@ class CommentTableViewCell: UITableViewCell {
         commentLabel.text = comment.comment
     }
     
+    // Download image file and assign to the image view
     func getImageAndShow(urlString: String) {
         if let url = URL(string: urlString) {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
