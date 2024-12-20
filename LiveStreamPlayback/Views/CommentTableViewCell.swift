@@ -1,4 +1,15 @@
+//
+//  CommentTableViewCell.swift
+//  LiveStreamPlayback
+//
+//  Created by rudra misra on 20/12/24.
+//
+
+import UIKit
+
 class CommentTableViewCell: UITableViewCell {
+
+    static let identifier = "CommentCell"
 
     // UI Elements for the custom cell
     let userImageView = UIImageView()
@@ -17,21 +28,27 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     func setupUI() {
+        
+        self.backgroundColor = .clear
+        
         // User Image View setup
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         userImageView.layer.cornerRadius = 20
         userImageView.clipsToBounds = true
         contentView.addSubview(userImageView)
+        userImageView.image = UIImage(systemName: "person.crop.circle.fill")
         
         // User Name Label setup
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         userNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        userNameLabel.textColor = .lightGray
         contentView.addSubview(userNameLabel)
         
         // Comment Label setup
         commentLabel.translatesAutoresizingMaskIntoConstraints = false
         commentLabel.font = UIFont.systemFont(ofSize: 14)
         commentLabel.numberOfLines = 0 // Allow multiple lines
+        commentLabel.textColor = .white
         contentView.addSubview(commentLabel)
         
         // Constraints for UI elements
@@ -54,8 +71,20 @@ class CommentTableViewCell: UITableViewCell {
 
     // Configure the cell with comment data
     func configure(with comment: Comment) {
-        userImageView.image = comment.userImage
-        userNameLabel.text = comment.userName
-        commentLabel.text = comment.commentText
+        getImageAndShow(urlString: comment.picURL ?? "")
+        userNameLabel.text = comment.username
+        commentLabel.text = comment.comment
+    }
+    
+    func getImageAndShow(urlString: String) {
+        if let url = URL(string: urlString) {
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async {
+                    self.userImageView.image = UIImage(data: data)
+                }
+            }
+            task.resume()
+        }
     }
 }
