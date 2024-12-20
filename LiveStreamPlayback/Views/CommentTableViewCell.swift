@@ -15,6 +15,7 @@ class CommentTableViewCell: UITableViewCell {
     let userImageView = UIImageView()
     let userNameLabel = UILabel()
     let commentLabel = UILabel()
+    let gradientView = UIView()  // Gradient overlay on the topmost comment
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,6 +52,11 @@ class CommentTableViewCell: UITableViewCell {
         commentLabel.textColor = .white
         contentView.addSubview(commentLabel)
         
+        gradientView.backgroundColor = UIColor.black.withAlphaComponent(0.5) // Apply a transparent black color
+        gradientView.layer.cornerRadius = 15
+        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(gradientView)
+        
         // Constraints for UI elements
         NSLayoutConstraint.activate([
             userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -65,8 +71,18 @@ class CommentTableViewCell: UITableViewCell {
             commentLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 4),
             commentLabel.leftAnchor.constraint(equalTo: userImageView.rightAnchor, constant: 8),
             commentLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),
-            commentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            commentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            
+            gradientView.topAnchor.constraint(equalTo: self.topAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: self.bottomAnchor) // Gradient only on topmost comment
         ])
+    }
+    
+    func applyGradientMask(_ bool: Bool) {
+        // Apply gradient mask
+        gradientView.isHidden = !bool
     }
 
     // Configure the cell with comment data

@@ -25,10 +25,16 @@ class VideoCell: UICollectionViewCell {
     let nameLabel = UILabel() // User's name
     let likesLabel = UILabel() // Likes count
     let viewsLabel = UILabel() // Views count
-    let typeLabel = UILabel() // vedio category or type
+    let typeLabel = UILabel() // Video category or type
     
+    private var commentTextField: UITextField! // Write comment
+
+    private var comments: [Comment] = []
+
+    private var isNewCommentAdded = false
+
     private let viewModel = VideoViewModel() // Instance of View Model
-    
+        
     private let videoContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -60,8 +66,8 @@ class VideoCell: UICollectionViewCell {
         player?.actionAtItemEnd = .none
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         
-        setupTableView()
         setupUIs()
+        setupTableView()
         updateUI(video: video)
         fetchComments()
     }
@@ -95,10 +101,10 @@ class VideoCell: UICollectionViewCell {
         
         // Constraints for the table view
         NSLayoutConstraint.activate([
-            commentTableView.topAnchor.constraint(equalTo: self.bottomAnchor, constant: -250),
+            commentTableView.topAnchor.constraint(equalTo: commentTextField.topAnchor, constant: -250),
             commentTableView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             commentTableView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
-            commentTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+            commentTableView.bottomAnchor.constraint(equalTo: commentTextField.topAnchor, constant: 0)
         ])
         
         // Register the custom cell
@@ -138,7 +144,7 @@ class VideoCell: UICollectionViewCell {
         self.addSubview(likesLabel)
         likesLabel.textColor = .lightGray
         likesLabel.font = UIFont.systemFont(ofSize: 15)
-        likesLabel.text = "🤍 1234"
+        likesLabel.text = "🤍 0"
         
         NSLayoutConstraint.activate([
             likesLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
@@ -150,7 +156,7 @@ class VideoCell: UICollectionViewCell {
         self.addSubview(viewsLabel)
         viewsLabel.textColor = .lightGray
         viewsLabel.font = UIFont.systemFont(ofSize: 15)
-        viewsLabel.text = "🔲 234556"
+        viewsLabel.text = "📺 0"
         
         NSLayoutConstraint.activate([
             viewsLabel.topAnchor.constraint(equalTo: likesLabel.bottomAnchor, constant: 8),
@@ -168,12 +174,27 @@ class VideoCell: UICollectionViewCell {
             typeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             typeLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 10)
         ])
+        
+        // Comment text field setup
+        commentTextField = UITextField()
+        commentTextField.layer.cornerRadius = 10
+        commentTextField.backgroundColor = .white.withAlphaComponent(0.5)
+        commentTextField.delegate = self
+        commentTextField.translatesAutoresizingMaskIntoConstraints = false
+        commentTextField.placeholder = "Type here..."
+        contentView.addSubview(commentTextField)
+        NSLayoutConstraint.activate([
+            commentTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -25),
+            commentTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            commentTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+            commentTextField.heightAnchor.constraint(equalToConstant: 40) // Fixed height for text field
+        ])
     }
     
     // change UI values as per the videos
     func updateUI(video: Video) {
         nameLabel.text = video.username
-        viewsLabel.text = "🔲 \(video.viewers ?? 0)"
+        viewsLabel.text = "📺 \(video.viewers ?? 0)"
         likesLabel.text = "🤍 \(video.likes ?? 0)"
         typeLabel.text = "⭐️ \(video.topic ?? "")"
         getImageAndShow(urlString: video.profilePicURL ?? "")
@@ -192,11 +213,16 @@ class VideoCell: UICollectionViewCell {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
     // MARK: load comments
     private func fetchComments() {
         viewModel.fetchComments { result in
             switch result {
-            case .success:
+            case .success(let comments):
+                self.comments = comments
                 DispatchQueue.main.async {
                     self.commentTableView.reloadData()
                 }
@@ -253,15 +279,52 @@ class VideoCell: UICollectionViewCell {
 extension VideoCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.comments.count
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentTableViewCell
-        let comment = viewModel.comments[indexPath.row]
+        let comment = comments[indexPath.row]
         // Configure the cell with the comment data
         cell.configure(with: comment)
-        
+        if isNewCommentAdded, indexPath.row == 0 {
+            cell.applyGradientMask(true)
+            isNewCommentAdded = false
+        } else {
+            cell.applyGradientMask(false)
+        }
         return cell
+    }
+}
+
+// MARK: - Text Field Delegate
+extension VideoCell: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textView: UITextField) {
+        // Adjust the UI when the keyboard appears
+        
+        UIView.animate(withDuration: 0.3) {
+            self.frame.origin.y -= 330 // Push the UI up when the keyboard appears
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textView: UITextField) {
+        // Reset the UI when the keyboard disappears
+        UIView.animate(withDuration: 0.3) {
+            self.frame.origin.y += 330
+        }
+    }
+    
+    func textFieldShouldReturn(_ textView: UITextField) -> Bool {
+        // Add a new comment when the user presses return
+        if let newCommentText = textView.text, !newCommentText.isEmpty {
+            let newComment = Comment(id: 123, username: "Bat", picURL: "https://img.freepik.com/premium-photo/gothic-dark-intensity-isolated-bat-symbol-tattoo-design_899449-191248.jpg", comment: newCommentText)
+            comments.insert(newComment, at: 0) // Insert at the top
+            isNewCommentAdded = true
+            commentTableView.reloadData()
+            commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            textView.text = "" // Clear text view after submitting
+        }
+        textView.resignFirstResponder()
+        return true
     }
 }
