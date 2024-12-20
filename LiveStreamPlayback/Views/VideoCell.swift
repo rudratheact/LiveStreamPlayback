@@ -28,10 +28,12 @@ class VideoCell: UICollectionViewCell {
     let typeLabel = UILabel() // Video category or type
     
     private var commentTextField: UITextField! // Write comment
+    
+    private var followButton: UIButton! // Follow button
+    
+    private var comments: [Comment] = [] // Local container for comments
 
-    private var comments: [Comment] = []
-
-    private var isNewCommentAdded = false
+    private var isNewCommentAdded = false // Flag to check If new comment added
 
     private let viewModel = VideoViewModel() // Instance of View Model
         
@@ -189,6 +191,23 @@ class VideoCell: UICollectionViewCell {
             commentTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
             commentTextField.heightAnchor.constraint(equalToConstant: 40) // Fixed height for text field
         ])
+        
+        // Follow button setup
+        followButton = UIButton(type: .system)
+        followButton.setTitle("+ Follow", for: .normal)
+        followButton.backgroundColor = .red
+        followButton.setTitleColor(.white, for: .normal)
+        followButton.layer.cornerRadius = 15
+        followButton.translatesAutoresizingMaskIntoConstraints = false
+        followButton.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
+        contentView.addSubview(followButton)
+        
+        NSLayoutConstraint.activate([
+            followButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
+            followButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
+            followButton.heightAnchor.constraint(equalToConstant: 40),
+            followButton.widthAnchor.constraint(equalToConstant: 90)
+        ])
     }
     
     // change UI values as per the videos
@@ -272,6 +291,19 @@ class VideoCell: UICollectionViewCell {
             heartImageView.transform = CGAffineTransform(translationX: 0, y: -100).scaledBy(x: 2, y: 2)
         }) { _ in
             heartImageView.removeFromSuperview()
+        }
+    }
+    
+    // Action method when button is tapped
+    @objc func followButtonTapped() {
+        if followButton.title(for: .normal) == "+ Follow" {
+            // Change title and background color when the button is tapped
+            followButton.setTitle("Following", for: .normal)
+            followButton.backgroundColor = .systemGreen
+        } else {
+            // Reset to the original title and color
+            followButton.setTitle("+ Follow", for: .normal)
+            followButton.backgroundColor = .red
         }
     }
     
