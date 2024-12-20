@@ -33,6 +33,7 @@ class LiveStreamViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.identifier)
         collectionView.isPagingEnabled = true
+        collectionView.contentInsetAdjustmentBehavior = .never
         view.addSubview(collectionView)
     }
 

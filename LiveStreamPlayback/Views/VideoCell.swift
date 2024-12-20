@@ -193,6 +193,7 @@ class VideoCell: UICollectionViewCell {
     
     // change UI values as per the videos
     func updateUI(video: Video) {
+        isNewCommentAdded = false
         nameLabel.text = video.username
         viewsLabel.text = "📺 \(video.viewers ?? 0)"
         likesLabel.text = "🤍 \(video.likes ?? 0)"
@@ -224,12 +225,17 @@ class VideoCell: UICollectionViewCell {
             case .success(let comments):
                 self.comments = comments
                 DispatchQueue.main.async {
-                    self.commentTableView.reloadData()
+                    self.reloadTableView()
                 }
             case .failure(let error):
                 print("Error fetching videos: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func reloadTableView() {
+        commentTableView.reloadData()
+        commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     // MARK: Video Player controller
@@ -289,7 +295,6 @@ extension VideoCell: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: comment)
         if isNewCommentAdded, indexPath.row == 0 {
             cell.applyGradientMask(true)
-            isNewCommentAdded = false
         } else {
             cell.applyGradientMask(false)
         }
@@ -320,8 +325,7 @@ extension VideoCell: UITextFieldDelegate {
             let newComment = Comment(id: 123, username: "Bat", picURL: "https://img.freepik.com/premium-photo/gothic-dark-intensity-isolated-bat-symbol-tattoo-design_899449-191248.jpg", comment: newCommentText)
             comments.insert(newComment, at: 0) // Insert at the top
             isNewCommentAdded = true
-            commentTableView.reloadData()
-            commentTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            reloadTableView()
             textView.text = "" // Clear text view after submitting
         }
         textView.resignFirstResponder()
