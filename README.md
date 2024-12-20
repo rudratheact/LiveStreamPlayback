@@ -1,7 +1,7 @@
 Demo Story/feed screen like Tiktok or instagram.
-
 </br>
 <b>Freatures included:</b>
+</br>
 1. On view appear play Video
 2. Show user info, like and views
 3. Scrollable comments view
