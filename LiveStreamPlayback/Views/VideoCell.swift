@@ -204,7 +204,7 @@ class VideoCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             followButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            followButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
+            followButton.leadingAnchor.constraint(equalTo: typeLabel.trailingAnchor, constant: 15),
             followButton.heightAnchor.constraint(equalToConstant: 40),
             followButton.widthAnchor.constraint(equalToConstant: 90)
         ])
